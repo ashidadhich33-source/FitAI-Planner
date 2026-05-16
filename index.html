@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="FitAI Planner creates India-first diet and workout plans based on your body, budget, goal, food preference, and gym or home setup."
+    />
+    <title>FitAI Planner — Indian Diet & Workout Plan in 2 Minutes</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="FitAI Planner home">
+          <span class="brand-mark">F</span>
+          <span>FitAI Planner</span>
+        </a>
+        <div class="nav-links">
+          <a href="#calculator">Free calculator</a>
+          <a href="#phase-zero">Phase 0</a>
+          <a href="#pricing">Pricing</a>
+          <a class="button button-small" href="#waitlist">Join waitlist</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Phase 0 validation launch</p>
+          <h1>Personalized Indian diet + workout plan in 2 minutes.</h1>
+          <p class="hero-subtitle">
+            Calculate your BMI, calories, and protein target, then join the beta for an India-first AI plan built around roti, dal, rice, paneer, eggs, chicken, soya, curd, and your real budget.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#calculator">Try free calculator</a>
+            <a class="button button-secondary" href="#waitlist">Get beta access</a>
+          </div>
+          <ul class="trust-list" aria-label="Product highlights">
+            <li>Gym or home workouts</li>
+            <li>Veg, eggetarian, non-veg, vegan</li>
+            <li>₹150/day to premium meal budgets</li>
+          </ul>
+        </div>
+        <aside class="hero-card" aria-label="Sample plan preview">
+          <div class="phone-card">
+            <div class="phone-card-header">
+              <span>Today’s sample</span>
+              <strong>Fat loss</strong>
+            </div>
+            <div class="metric-row">
+              <span>Calories</span>
+              <strong>1,850 kcal</strong>
+            </div>
+            <div class="metric-row">
+              <span>Protein</span>
+              <strong>125g</strong>
+            </div>
+            <div class="meal-card">
+              <span>Breakfast</span>
+              <p>Poha + curd + roasted chana</p>
+            </div>
+            <div class="meal-card">
+              <span>Workout</span>
+              <p>Upper body — 45 min gym plan</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="calculator" class="calculator-section">
+        <div class="section-heading">
+          <p class="eyebrow">Free lead magnet</p>
+          <h2>BMI, calorie, and protein calculator</h2>
+          <p>
+            Use this Phase 0 calculator to deliver instant value before asking users to join the waitlist or buy the first ₹99 starter plan.
+          </p>
+        </div>
+
+        <div class="calculator-layout">
+          <form id="fitness-form" class="card form-card">
+            <div class="form-grid">
+              <label>
+                Age
+                <input id="age" name="age" type="number" min="13" max="80" value="24" required />
+              </label>
+              <label>
+                Gender for BMR formula
+                <select id="gender" name="gender" required>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </label>
+              <label>
+                Height (cm)
+                <input id="height" name="height" type="number" min="120" max="230" value="173" required />
+              </label>
+              <label>
+                Weight (kg)
+                <input id="weight" name="weight" type="number" min="35" max="220" value="76" required />
+              </label>
+              <label>
+                Activity level
+                <select id="activity" name="activity" required>
+                  <option value="1.2">Sedentary</option>
+                  <option value="1.375">Lightly active</option>
+                  <option value="1.55" selected>Moderately active</option>
+                  <option value="1.725">Very active</option>
+                </select>
+              </label>
+              <label>
+                Goal
+                <select id="goal" name="goal" required>
+                  <option value="fatLoss" selected>Fat loss</option>
+                  <option value="recomp">Recomposition</option>
+                  <option value="leanBulk">Lean bulk</option>
+                  <option value="muscleGain">Muscle gain</option>
+                </select>
+              </label>
+              <label>
+                Food preference
+                <select id="food" name="food" required>
+                  <option>Vegetarian</option>
+                  <option>Eggetarian</option>
+                  <option>Non-vegetarian</option>
+                  <option>Vegan</option>
+                </select>
+              </label>
+              <label>
+                Daily food budget
+                <select id="budget" name="budget" required>
+                  <option>₹100–₹150/day</option>
+                  <option selected>₹200–₹300/day</option>
+                  <option>₹400+/day</option>
+                </select>
+              </label>
+            </div>
+            <button class="button full-width" type="submit">Calculate my plan preview</button>
+            <p class="form-note">
+              This is fitness education, not medical advice. Users with medical conditions should consult a qualified professional.
+            </p>
+          </form>
+
+          <aside id="results" class="card results-card" aria-live="polite">
+            <p class="eyebrow">Your preview</p>
+            <h3>Enter details to see your targets</h3>
+            <div class="result-grid">
+              <div><span>BMI</span><strong id="bmi-result">—</strong></div>
+              <div><span>BMR</span><strong id="bmr-result">—</strong></div>
+              <div><span>TDEE</span><strong id="tdee-result">—</strong></div>
+              <div><span>Target calories</span><strong id="calorie-result">—</strong></div>
+              <div><span>Protein</span><strong id="protein-result">—</strong></div>
+              <div><span>Plan angle</span><strong id="angle-result">—</strong></div>
+            </div>
+            <div class="sample-output">
+              <h4>Beta plan preview</h4>
+              <p id="sample-plan">Your sample Indian meal and workout angle will appear here.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="phase-zero" class="phase-section">
+        <div class="section-heading">
+          <p class="eyebrow">What Phase 0 ships</p>
+          <h2>Validate demand before building the full app.</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="card">
+            <h3>Landing page</h3>
+            <p>Clear promise, Indian examples, gym/home positioning, and waitlist capture for early users.</p>
+          </article>
+          <article class="card">
+            <h3>Free calculator</h3>
+            <p>Instant BMI, BMR, TDEE, goal calories, and protein target so visitors get value immediately.</p>
+          </article>
+          <article class="card">
+            <h3>Waitlist signal</h3>
+            <p>Collect food preference, goal, and budget interest to decide which Phase 1 templates to build first.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="pricing" class="pricing-section">
+        <div class="section-heading">
+          <p class="eyebrow">Validation pricing</p>
+          <h2>Start simple, then upsell subscriptions.</h2>
+        </div>
+        <div class="pricing-grid">
+          <article class="card price-card">
+            <span>Free</span>
+            <h3>₹0</h3>
+            <p>BMI, calories, protein target, and sample Indian plan preview.</p>
+          </article>
+          <article class="card price-card highlighted">
+            <span>Starter</span>
+            <h3>₹99</h3>
+            <p>7-day Indian diet + gym/home workout PDF for early adopters.</p>
+            <a class="button full-width" href="#waitlist" data-track-plan data-plan="starter">I want this first</a>
+          </article>
+          <article class="card price-card">
+            <span>Premium beta</span>
+            <h3>₹199/mo</h3>
+            <p>Monthly plan refresh, progress check-ins, and food swaps.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="validation" class="validation-section">
+        <div class="section-heading">
+          <p class="eyebrow">Local validation dashboard</p>
+          <h2>Track Phase 0 signal before writing backend code.</h2>
+          <p>
+            This lightweight dashboard stores calculator, waitlist, and starter-interest events in browser local storage for demo validation. Replace it with analytics and a database before running paid campaigns.
+          </p>
+        </div>
+        <div class="validation-grid">
+          <article class="card metric-card">
+            <span>Calculator completions</span>
+            <strong id="metric-calculator">0</strong>
+          </article>
+          <article class="card metric-card">
+            <span>Waitlist leads</span>
+            <strong id="metric-waitlist">0</strong>
+          </article>
+          <article class="card metric-card">
+            <span>Starter interest clicks</span>
+            <strong id="metric-starter">0</strong>
+          </article>
+        </div>
+        <button id="export-waitlist" class="button button-secondary" type="button">Export waitlist CSV</button>
+      </section>
+
+      <section id="waitlist" class="waitlist-section section-grid">
+        <div>
+          <p class="eyebrow">Join the beta</p>
+          <h2>Help shape the first India-first AI fitness planner.</h2>
+          <p>
+            Phase 0 goal: interview early users, validate the calculator, and identify the most demanded Indian food templates before building Phase 1.
+          </p>
+        </div>
+        <form id="waitlist-form" class="card waitlist-card">
+          <label>
+            Name
+            <input id="waitlist-name" type="text" placeholder="Your name" required />
+          </label>
+          <label>
+            Email or WhatsApp
+            <input id="waitlist-contact" type="text" placeholder="you@example.com or +91..." required />
+          </label>
+          <label>
+            Biggest goal
+            <select id="waitlist-goal">
+              <option>Fat loss</option>
+              <option>Lean bulk</option>
+              <option>Muscle gain</option>
+              <option>Strength</option>
+            </select>
+          </label>
+          <button class="button full-width" type="submit">Save my beta interest</button>
+          <p id="waitlist-message" class="form-note" role="status">Stored locally for Phase 0 demo.</p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>FitAI Planner Phase 0 MVP — India-first fitness validation.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
