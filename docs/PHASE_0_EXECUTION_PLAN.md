@@ -6,14 +6,15 @@ Phase 0 is the validation step before building the full AI planning system. The 
 
 - Static landing page at `index.html`.
 - Responsive styling at `styles.css`.
-- Browser calculator and local waitlist demo logic at `script.js`.
+- Browser calculator, local waitlist demo logic, local analytics events, and CSV export at `script.js`.
 - Free calculator for BMI, BMR, TDEE, target calories, and protein.
+- Local validation dashboard for calculator completions, waitlist leads, and starter-interest clicks.
 - India-first positioning around food preferences, daily budget, gym/home plans, and beta pricing.
 
 ## Validation checklist
 
 1. Publish the static page using a simple host such as Vercel, Netlify, Cloudflare Pages, or GitHub Pages.
-2. Add analytics before sending traffic.
+2. Use the local validation dashboard for demos, but add production analytics before sending real traffic.
 3. Add a real waitlist backend, CRM form, or Google Sheet automation before paid ads.
 4. Create 10 short-form posts around common Indian fitness confusion.
 5. Interview at least 20 users from the waitlist.

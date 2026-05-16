@@ -1,0 +1,10 @@
+{
+  "name": "fitai-planner-phase-0",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Phase 0 validation MVP for FitAI Planner.",
+  "scripts": {
+    "test": "node --test"
+  },
+  "devDependencies": {}
+}

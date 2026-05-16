@@ -198,6 +198,7 @@
             <span>Starter</span>
             <h3>₹99</h3>
             <p>7-day Indian diet + gym/home workout PDF for early adopters.</p>
+            <a class="button full-width" href="#waitlist" data-track-plan data-plan="starter">I want this first</a>
           </article>
           <article class="card price-card">
             <span>Premium beta</span>
@@ -205,6 +206,31 @@
             <p>Monthly plan refresh, progress check-ins, and food swaps.</p>
           </article>
         </div>
+      </section>
+
+      <section id="validation" class="validation-section">
+        <div class="section-heading">
+          <p class="eyebrow">Local validation dashboard</p>
+          <h2>Track Phase 0 signal before writing backend code.</h2>
+          <p>
+            This lightweight dashboard stores calculator, waitlist, and starter-interest events in browser local storage for demo validation. Replace it with analytics and a database before running paid campaigns.
+          </p>
+        </div>
+        <div class="validation-grid">
+          <article class="card metric-card">
+            <span>Calculator completions</span>
+            <strong id="metric-calculator">0</strong>
+          </article>
+          <article class="card metric-card">
+            <span>Waitlist leads</span>
+            <strong id="metric-waitlist">0</strong>
+          </article>
+          <article class="card metric-card">
+            <span>Starter interest clicks</span>
+            <strong id="metric-starter">0</strong>
+          </article>
+        </div>
+        <button id="export-waitlist" class="button button-secondary" type="button">Export waitlist CSV</button>
       </section>
 
       <section id="waitlist" class="waitlist-section section-grid">

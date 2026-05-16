@@ -8,6 +8,8 @@ FitAI Planner is being built as an India-first AI fitness planning platform. The
 - Free calculator for BMI, BMR, TDEE, goal calories, and protein target.
 - Indian food and budget-aware sample plan preview.
 - Beta waitlist form that stores entries in browser local storage for the demo.
+- Local validation dashboard for calculator completions, waitlist leads, and starter-plan interest.
+- CSV export for locally captured waitlist leads.
 - Validation pricing cards for Free, ₹99 Starter, and ₹199/month beta.
 
 ## Run locally
@@ -32,3 +34,12 @@ Use this page to collect early feedback before Phase 1 implementation:
 ## Research
 
 See [`docs/INDIA_MARKET_STUDY.md`](docs/INDIA_MARKET_STUDY.md) for the full India market and product study.
+
+
+## Test
+
+Run the calculator and validation utility tests with:
+
+```bash
+npm test
+```

@@ -1,3 +1,8 @@
+const STORAGE_KEYS = {
+  waitlist: 'fitaiWaitlist',
+  analytics: 'fitaiAnalyticsEvents',
+};
+
 const goalAdjustments = {
   fatLoss: { multiplier: 0.8, label: 'Controlled fat loss' },
   recomp: { multiplier: 0.95, label: 'Beginner recomposition' },
@@ -67,6 +72,55 @@ function readProfileFromForm(form) {
   };
 }
 
+function safeParseJson(value, fallback = []) {
+  try {
+    return value ? JSON.parse(value) : fallback;
+  } catch (_error) {
+    return fallback;
+  }
+}
+
+function getStoredJson(key, fallback = []) {
+  if (typeof localStorage === 'undefined') return fallback;
+  return safeParseJson(localStorage.getItem(key), fallback);
+}
+
+function saveStoredJson(key, value) {
+  if (typeof localStorage === 'undefined') return;
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+function trackEvent(name, payload = {}) {
+  const event = {
+    name,
+    payload,
+    createdAt: new Date().toISOString(),
+  };
+  const events = getStoredJson(STORAGE_KEYS.analytics);
+  events.push(event);
+  saveStoredJson(STORAGE_KEYS.analytics, events);
+  updateValidationMetrics();
+  return event;
+}
+
+function summarizeValidationData(waitlist = [], events = []) {
+  return {
+    calculatorCompletions: events.filter((event) => event.name === 'calculator_completed').length,
+    waitlistLeads: waitlist.length,
+    starterClicks: events.filter((event) => event.name === 'starter_interest_clicked').length,
+  };
+}
+
+function escapeCsv(value) {
+  return `"${String(value ?? '').replaceAll('"', '""')}"`;
+}
+
+function buildWaitlistCsv(waitlist) {
+  const headers = ['name', 'contact', 'goal', 'createdAt'];
+  const rows = waitlist.map((entry) => headers.map((header) => escapeCsv(entry[header])).join(','));
+  return [headers.join(','), ...rows].join('\n');
+}
+
 function setText(id, value) {
   const element = document.getElementById(id);
   if (element) element.textContent = value;
@@ -82,11 +136,30 @@ function renderResults(profile, result) {
   setText('sample-plan', buildSamplePlan(profile, result));
 }
 
+function updateValidationMetrics() {
+  if (typeof document === 'undefined') return;
+  const summary = summarizeValidationData(
+    getStoredJson(STORAGE_KEYS.waitlist),
+    getStoredJson(STORAGE_KEYS.analytics),
+  );
+
+  setText('metric-calculator', summary.calculatorCompletions);
+  setText('metric-waitlist', summary.waitlistLeads);
+  setText('metric-starter', summary.starterClicks);
+}
+
 function handleCalculatorSubmit(event) {
   event.preventDefault();
   const profile = readProfileFromForm(event.currentTarget);
   const result = calculatePlanPreview(profile);
   renderResults(profile, result);
+  trackEvent('calculator_completed', {
+    goal: profile.goal,
+    food: profile.food,
+    budget: profile.budget,
+    targetCalories: result.targetCalories,
+    protein: result.protein,
+  });
 }
 
 function handleWaitlistSubmit(event) {
@@ -98,12 +171,31 @@ function handleWaitlistSubmit(event) {
     createdAt: new Date().toISOString(),
   };
 
-  const existing = JSON.parse(localStorage.getItem('fitaiWaitlist') || '[]');
+  const existing = getStoredJson(STORAGE_KEYS.waitlist);
   existing.push(entry);
-  localStorage.setItem('fitaiWaitlist', JSON.stringify(existing));
+  saveStoredJson(STORAGE_KEYS.waitlist, existing);
+  trackEvent('waitlist_joined', { goal: entry.goal });
 
   event.currentTarget.reset();
   setText('waitlist-message', `Saved locally. Beta interest count on this device: ${existing.length}.`);
+}
+
+function handleStarterInterestClick(event) {
+  const planName = event.currentTarget?.dataset?.plan || 'starter';
+  trackEvent('starter_interest_clicked', { planName });
+}
+
+function exportWaitlistCsv() {
+  const waitlist = getStoredJson(STORAGE_KEYS.waitlist);
+  const csv = buildWaitlistCsv(waitlist);
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'fitai-phase-0-waitlist.csv';
+  link.click();
+  URL.revokeObjectURL(url);
+  trackEvent('waitlist_exported', { count: waitlist.length });
 }
 
 function init() {
@@ -118,6 +210,18 @@ function init() {
   if (waitlistForm) {
     waitlistForm.addEventListener('submit', handleWaitlistSubmit);
   }
+
+  document.querySelectorAll('[data-track-plan]').forEach((element) => {
+    element.addEventListener('click', handleStarterInterestClick);
+  });
+
+  const exportButton = document.getElementById('export-waitlist');
+  if (exportButton) {
+    exportButton.addEventListener('click', exportWaitlistCsv);
+  }
+
+  updateValidationMetrics();
+  trackEvent('page_viewed', { path: window.location.pathname });
 }
 
 if (typeof document !== 'undefined') {
@@ -126,10 +230,15 @@ if (typeof document !== 'undefined') {
 
 if (typeof module !== 'undefined') {
   module.exports = {
+    STORAGE_KEYS,
     buildSamplePlan,
+    buildWaitlistCsv,
     calculateBmi,
     calculateBmr,
     calculatePlanPreview,
+    escapeCsv,
     roundToNearest,
+    safeParseJson,
+    summarizeValidationData,
   };
 }
